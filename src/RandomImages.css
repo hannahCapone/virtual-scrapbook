@@ -1,0 +1,121 @@
+.image-container {
+    position: relative;
+    width: 100vw;
+    height: 135vh;
+    overflow: hidden;
+  }
+  
+  .random-image {
+    position: absolute;
+    margin: 10px; /* Ensure spacing between images */
+    transform: rotate(var(--rotate));
+    transition: transform 0.2s ease-in-out;
+    filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.3));
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .random-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  .random-image.dragging {
+    cursor: grabbing;
+    transform: rotate(0deg) scale(1.08);
+  }
+
+  .random-image:hover {
+    transform: rotate(var(--rotate)) scale(1.05);
+  }
+
+  /* Things holding the scraps down */
+  .holder {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .holder.tape,
+  .holder.corners::before,
+  .holder.corners::after {
+    background: var(--holder-color);
+    opacity: 0.85;
+    clip-path: polygon(3% 0, 97% 0, 100% 14%, 96% 30%, 100% 46%, 97% 62%, 100% 80%, 97% 100%, 3% 100%, 0 84%, 4% 68%, 0 52%, 3% 36%, 0 20%);
+  }
+
+  .holder.tape {
+    top: -12px;
+    left: 50%;
+    width: 38%;
+    min-width: 54px;
+    max-width: 110px;
+    height: 26px;
+    transform: translateX(-50%) rotate(var(--holder-rotate));
+  }
+
+  .holder.corners {
+    inset: 0;
+  }
+
+  .holder.corners::before,
+  .holder.corners::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    width: 64px;
+    height: 22px;
+  }
+
+  .holder.corners::before {
+    left: -20px;
+    transform: rotate(-42deg);
+  }
+
+  .holder.corners::after {
+    right: -20px;
+    transform: rotate(42deg);
+  }
+
+
+  .scrap-detail {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem 1rem;
+    background: rgba(0, 0, 0, 0.8);
+    cursor: zoom-out;
+  }
+
+  .scrap-detail img {
+    max-width: min(90vw, 800px);
+    max-height: 75vh;
+    object-fit: contain;
+  }
+
+  .scrap-detail p {
+    max-width: 40rem;
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .scrap-detail button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+  }

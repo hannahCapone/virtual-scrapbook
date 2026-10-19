@@ -1,75 +1,38 @@
-/* Same palette and type as hannahcapone.github.io */
-:root {
-  --lavender: #cdc3f1;
-  --orange: #e9634d;
-  --red: #d0311f;
-  --pen: #3d2f94;
-  --ink: #1c1a17;
-  --desk: #e6dfd1;
-}
-
-.page { min-height: 100vh; background: var(--desk); }
-
-.header {
-  padding: clamp(1.25rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 3rem) clamp(2rem, 5vw, 3.5rem);
-  background: var(--lavender);
-}
-.back {
-  display: inline-block;
-  margin-bottom: clamp(1.5rem, 5vw, 3rem);
-  font-size: 0.85rem;
-  color: var(--ink);
-  text-decoration: none;
-}
-.back:hover { color: var(--red); }
-.header h1 {
-  margin: 0;
-  font: 900 clamp(3rem, 10vw, 7.5rem)/0.9 "Sofia Sans Extra Condensed", "Arial Narrow", sans-serif;
-  text-transform: uppercase;
-  color: var(--orange);
-}
-.header h1 em {
-  font: 400 0.5em/1 "Homemade Apple", cursive;
-  text-transform: none;
-  color: var(--red);
-  padding-left: 0.15em;
-}
-.note {
-  margin: 1rem 0 0;
-  font: clamp(1.6rem, 3vw, 2.1rem)/1.1 "Reenie Beanie", cursive;
-  color: var(--pen);
-}
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem 1.5rem;
-  margin-top: 1.5rem;
-}
-.actions button {
-  padding: 0.45rem 1rem 0.4rem;
-  border: 1.5px solid var(--ink);
-  border-radius: 999px;
-  background: #d9ee50;
-  font: 700 0.85rem "Space Mono", monospace;
-  color: var(--ink);
-  cursor: pointer;
-}
-.actions button:hover { background: var(--ink); color: #d9ee50; }
-.hint { font: 1.4rem/1 "Reenie Beanie", cursive; color: var(--pen); }
-
-/* Real recycled-paper scan (CC0, ambientCG Paper002) */
-.paper {
-  margin: clamp(1rem, 3vw, 2.5rem) clamp(0.75rem, 3vw, 2.5rem) 0;
-  padding: clamp(2rem, 5vw, 3.5rem) clamp(0.75rem, 3vw, 2.5rem);
-  background: url(./paper.jpg) 0 0 / 700px auto;
-  box-shadow: 0 1px 2px rgba(28, 26, 23, 0.08), 0 14px 30px -18px rgba(28, 26, 23, 0.35);
-  overflow: hidden;
-}
-
-.footer {
-  padding: 2.5rem 1rem;
+.App {
   text-align: center;
-  font: 1.3rem "Reenie Beanie", cursive;
-  color: var(--pen);
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #ff0000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
