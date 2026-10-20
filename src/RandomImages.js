@@ -8,10 +8,10 @@ const images = [
   { src: 'scraps/scrap2.webp', alt: 'Book Depot sign', aspectRatio: 820 / 538, caption: '' },
   { src: 'scraps/scrap3.webp', alt: 'Illustrated postcard from Berlin', aspectRatio: 900 / 631, caption: '' },
   { src: 'scraps/scrap4.webp', alt: 'Doodle of looping lines', aspectRatio: 637 / 900, caption: '' },
-  { src: 'scraps/scrap5.webp', round: true, alt: "Brouwerij 't IJ beer coaster, Amsterdam", aspectRatio: 864 / 885, caption: '' },
-  { src: 'scraps/scrap6.webp', round: true, alt: 'Grolsch beer coaster', aspectRatio: 890 / 882, caption: '' },
-  { src: 'scraps/scrap7.webp', round: true, alt: 'The Bulldog Amsterdam coaster', aspectRatio: 857 / 859, caption: '' },
-  { src: 'scraps/scrap8.webp', round: true, alt: 'Pilsner Urquell beer coaster', aspectRatio: 882 / 878, caption: '' },
+  { src: 'scraps/scrap5.webp', alt: "Brouwerij 't IJ beer coaster, Amsterdam", aspectRatio: 864 / 885, caption: '' },
+  { src: 'scraps/scrap6.webp', alt: 'Grolsch beer coaster', aspectRatio: 890 / 882, caption: '' },
+  { src: 'scraps/scrap7.webp', alt: 'The Bulldog Amsterdam coaster', aspectRatio: 857 / 859, caption: '' },
+  { src: 'scraps/scrap8.webp', alt: 'Pilsner Urquell beer coaster', aspectRatio: 882 / 878, caption: '' },
   { src: 'scraps/scrap9.webp', alt: 'Stone Brewing beer flight card', aspectRatio: 539 / 803, caption: '' },
   { src: 'scraps/scrap10.webp', alt: 'Photo booth strip', aspectRatio: 289 / 900, caption: '' },
   { src: 'scraps/scrap11.webp', alt: 'Winthrop, Massachusetts postcard', aspectRatio: 900 / 617, caption: '' },
@@ -37,11 +37,6 @@ const MAX_ATTEMPTS = 300;
 // The board is a bit taller than the screen so bigger scraps still have room
 const BOARD_HEIGHT = 1.35;
 
-// About half the scraps get tape; round coasters never do
-const TAPE_CHANCE = 0.5;
-const HOLDERS = ['tape', 'tape', 'corners'];
-const TAPE_COLORS = ['#d9ee50', '#cdc3f1', '#f1e4a2', '#f6b7a6', '#bfe3d6'];
-const pick = (list) => list[Math.floor(Math.random() * list.length)];
 
 const doRectanglesOverlap = (r1, r2) => {
   return !(r2.left >= r1.right || 
@@ -89,9 +84,6 @@ const getRandomRect = (aspectRatio, placedRects) => {
   }
 
   rect.rotate = Math.random() * 8 - 4;
-  rect.holder = !images[placedRects.length].round && Math.random() < TAPE_CHANCE ? pick(HOLDERS) : 'none';
-  rect.color = pick(TAPE_COLORS);
-  rect.holderRotate = Math.random() * 16 - 8;
   placedRects.push(rect);
   return rect;
 };
@@ -132,11 +124,13 @@ const RandomImages = () => {
     const dy = e.clientY - d.startY;
     if (Math.abs(dx) + Math.abs(dy) > 5) d.moved = true;
     if (!d.moved) return;
+    // Scraps can go anywhere on the page, including up over the title
     const box = containerRef.current.getBoundingClientRect();
+    const pageTop = box.top + window.scrollY;
     setRects(r => r.map((rect, i) => i !== d.index ? rect : {
       ...rect,
-      left: Math.min(Math.max(d.left + dx, 0), box.width - rect.width),
-      top: Math.min(Math.max(d.top + dy, 0), box.height - rect.height),
+      left: Math.min(Math.max(d.left + dx, -box.left), box.width - rect.width),
+      top: Math.min(Math.max(d.top + dy, -pageTop), box.height - rect.height),
     }));
   };
 
@@ -160,8 +154,6 @@ const RandomImages = () => {
             height: `${rects[index].height}px`,
             zIndex: order.indexOf(index) + 1,
             '--rotate': `${rects[index].rotate}deg`,
-            '--holder-color': rects[index].color,
-            '--holder-rotate': `${rects[index].holderRotate}deg`,
           }}
           className={`random-image${drag.current && drag.current.index === index ? ' dragging' : ''}`}
           onPointerDown={(e) => onPointerDown(e, index)}
@@ -169,7 +161,6 @@ const RandomImages = () => {
           onPointerUp={onPointerUp}
         >
           <img src={src(image)} alt={image.alt} draggable="false" />
-          <span className={`holder ${rects[index].holder}`} aria-hidden="true" />
         </div>
       ))}
 
