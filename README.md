@@ -2,7 +2,7 @@
 
 A collection of postcards, tickets, and coasters from my travels, scattered across a page like a real scrapbook. Drag scraps around, click one to look closer, or shuffle the page.
 
-Built with React. Live at https://hannahcapone.github.io/virtual-scrapbook.github.io/
+Built with React. Live at https://hannahcapone.github.io/virtual-scrapbook/
 
 ## Run it locally
 
